@@ -1,0 +1,7 @@
+with open("/usercode/files/books.txt") as f:
+   t=[]
+   y=1
+   for line in f.readlines():
+      t=line.split(" ")
+      print("Line "+ str(y) + ":"+" "+str(len(t))+" words")
+      y+=1 
