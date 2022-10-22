@@ -1,0 +1,74 @@
+try:
+    questions=["who is the father of computers \n(a)charles babbage (b) albert einstein (c)zantonio conte (d)pep guardiola","where is the cpu located \n (a)desktop (b)system unit  (c)monitor (d) keyboard"]
+    answers=["A","B"]
+    ans_input=[]
+    options=["A","B","C","D"]
+    name=str(input("what is your name: "))
+    scores_count=0
+    second_arr=[]
+
+    while True:
+     tr_type=input("""do you want unlimited tries on each question if you do enter y: 
+          else if you want only one try enter x: """)
+     try_type=tr_type.lower()
+
+
+     if try_type == "x": 
+        def question_input(ans_input):
+            for i in range(len(questions)):
+             print(questions[i])
+             q1=input().upper()
+             if q1 in options:
+                 ans_input.append(q1)
+             elif q1 not in options:
+                     while q1 not in options:
+                      print("you can only choose from A-D:",end="")
+                      q2=input("").upper()
+                      if q2 in options:
+                       ans_input.append(q2.upper())
+                       break
+        question_input(ans_input)
+
+
+        def score_count(name):
+            scores_count=0
+            for e in range(0,len(questions)):  
+             if ans_input[e] == answers[e]:
+                 scores_count+=1 
+            return name + " you got "+str(scores_count)+" out of "+str(len(questions))
+        print(score_count(name))
+        break
+
+     elif try_type == "y" :
+        def question_input(ans_input):
+           i=0
+           while True:
+              print(questions[i])
+              questio = input("")
+              question = questio.upper()
+              if question in options:
+                   if question == answers[i]:
+                       i+=1
+                       ans_input.append(question)
+                   if i == len(answers):
+                       break
+              elif question not in options:
+                   while question not in options:
+                       print("you can only choose from A-D: ",end=" ")
+                       second_inpuut=input("").upper()
+                       if second_inpuut in options and second_inpuut == answers[i]:
+                           i+=1
+                           ans_input.append(second_inpuut)
+                           break
+        question_input(ans_input)
+        def score_count(name):
+            scores_count=0
+            for e in range(0,len(questions)):  
+             if ans_input[e] == answers[e]:
+                 scores_count+=1 
+             t= name + " you got "+str(scores_count)+" out of "+str(len(questions))
+            return t
+        print(score_count(name))
+        break
+except (ValueError,TypeError,IndexError):
+    print("invalid input")
