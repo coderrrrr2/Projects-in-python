@@ -1,0 +1,103 @@
+import random
+user_score =0
+AI_score=0
+#this function generates the number that is used for the computer choice
+
+def number_generator():
+    number_gen=random.randint(1,3)
+    return number_gen
+
+def output_statement():
+    print("Welcome to my rock paper scissors game")
+    print("""you have three options:
+    1. rock
+    2. paper
+    3. scissors""")
+    
+# the main goal of this function is to catch the errors in the function and call another functon to get the score
+def error_catcher(no_range):
+    
+    output_statement()
+    round_count=0
+    i=0
+    while True:
+
+        if i == 3:
+            break
+        try:
+            # this aspect checks if the inputted  number is in the range of values;
+            computer_choice = number_generator()
+            user_input=int(input("what is your choice: "))
+            print("\n")
+            if user_input in no_range:
+                condition_checker(user_input,computer_choice,round_count)
+                        
+        # this aspect is catching value error
+        except ValueError:
+           while True:
+               print("you must input a number that is in the range of 1 to 3")
+               inputted_number=input("try again: ")
+               if inputted_number == "1" or inputted_number == "2" or inputted_number== "3":
+                   condition_checker(int(inputted_number),computer_choice,round_count)
+                   break
+        i += 1
+        round_count += 1
+
+#this function checks the inputted value against conditional statements to get the answer
+def condition_checker(user_input,computer_choice,round_count):
+    global user_score
+    global AI_score
+    #conditonal statement for determining score
+    if computer_choice == 1 and user_input == 2:
+        user_score += 1
+    elif computer_choice == 2  and user_input == 3:
+        user_score += 1
+    elif computer_choice == 1 and user_input == 3:
+        AI_score += 1
+    elif computer_choice == 3 and user_input == 1:
+        user_score += 1
+    elif computer_choice == 2 and user_input == 1:
+        AI_score +=1
+    elif computer_choice == 3  and user_input == 2:
+        AI_score += 1
+   
+    #print statement to output the choice of the computer and the user
+    if computer_choice == 1 :
+         print("computer choice is "+"rock")
+    elif computer_choice == 2:
+         print("computer choice is "+"paper")
+    elif computer_choice == 3:
+         print("computer choice is "+"scissors")
+    if user_input == 1:
+         print("user choice is "+"rock")
+    elif user_input == 2:
+         print("user choice is "+"paper")
+    elif user_input == 3:
+         print("user choice is "+"scissors")
+
+    #conditional statement for determinining who wins
+
+    if computer_choice == user_input and round_count < 2:
+        print("this is a draw")
+    elif AI_score > user_score and round_count < 2:
+        print("computer wins")
+    elif user_score > AI_score and round_count < 2:
+        print("user wins")
+    print("\n")
+
+    if AI_score > user_score and round_count == 2:
+        print("computer wins the round")
+    elif user_score > AI_score and round_count == 2:
+        print("user wins the round")
+    elif  AI_score == user_score and round_count == 2:
+        print("round ends in a draw")
+    if round_count == 2:
+        rerun_choice=input("do you want to play again (y for yes): ")
+        if rerun_choice.lower() == "y":
+            print("\n")
+            error_catcher(no_range)
+        else:
+            print("Thanks for playing my game")
+ #the no_range array was created to make checking for the range of values easier         
+no_range=[1,2,3]
+error_catcher(no_range)
