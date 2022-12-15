@@ -1,59 +1,61 @@
-card_no=input("enter your credit card number: ")
+try: 
+    card_no=input("enter your credit card number: ")
+    list_cardno=list(card_no)
 
-#asks the user for input if the first input is not a number
-while True:
-    if card_no.isnumeric() == True:
-            list_cardno=list(card_no)
-            list_cardno.reverse()
-            break
+    #checking for whitespaces in the input so they can be removed
+    for i in list_cardno:
+         if i == " ":
+            list_cardno.remove(i)
+    #values that were used in the function
+    sum_odd=0
+    even_arr=[]
+    mul_even=0
+    sum_even=0
 
-    else:
-            card_no=input("you can only enter a number: ")
+    # function to validate the number entered
+    def number_validation(list_cardno):
+    #declaring the variables as global so they can be modified in the function
+        global sum_odd
+        global mul_even
+        global sum_even
 
-#values that were used in the function
-sum_odd=0
-even_arr=[]
-mul_even=0
-sum_even=0
+    # seperates the arrays into odd and even arrays
+        for i in range(0,len(list_cardno)):
+            if i % 2 ==0:
+                sum_odd = sum_odd + int(list_cardno[i])
+            elif i % 2 != 0:
+                even_arr.append(int(list_cardno[i]))
+    #loop that manipulate the even numbers
+        for i in range(len(even_arr)):
+            mul_even= 2 * even_arr[i]
+            if mul_even > 9:
+                even_string=str(mul_even)
+                evenlist=list(even_string)
+                evenlist=[int(i) for i in evenlist]
+                even_sum=sum(evenlist)
+                even_arr[i]=even_sum
+            else:
+                even_arr[i]=mul_even
+            sum_even=sum(even_arr)
 
-#checking for whitespaces in the input so they can be removed
-
-for i in list_cardno:
-    if i == " ":
-        list_cardno.remove(i)
-
-# function to validate the number entered
-
-def number_validation(list_cardno):
-
-#declaring the variables as global so they can be modified in the function
-    global sum_odd
-    global mul_even
-    global sum_even
-
-# seperates the arrays into odd and even arrays
-    for i in range(0,len(list_cardno)):
-        if i % 2 ==0:
-            sum_odd = sum_odd + int(list_cardno[i])
-        elif i % 2 != 0:
-            even_arr.append(int(list_cardno[i]))
-#loop that manipulate the even numbers
-    for i in range(len(even_arr)):
-        mul_even= 2 * even_arr[i]
-        if mul_even > 9:
-            even_string=str(mul_even)
-            evenlist=list(even_string)
-            evenlist=[int(i) for i in evenlist]
-            even_sum=sum(evenlist)
-            even_arr[i]=even_sum
+     #adds the sum of the even and odd and returns whether the card is valid or not  
+        sum_both= sum_odd + sum_even
+        if sum_both % 10 == 0:
+            print("your card is valid")
         else:
-            even_arr[i]=mul_even
-        sum_even=sum(even_arr)
-
- #adds the sum of the even and odd and returns whether the card is valid or not  
-    sum_both= sum_odd + sum_even
-    if sum_both % 10 == 0:
-        print("your card is valid")
-    else:
-        print("your card is not valid")
-number_validation(list_cardno)
+            print("your card is not valid")
+    number_validation(list_cardno)
+except ValueError:
+    element_counter=0
+    while True:
+         card_no=input("""you can only enter a number
+try again: """)
+         list_cardno=list(card_no)
+         list_cardno=[i for i in list_cardno if i != " "]
+#loops through the list for validation
+         for i in list_cardno:
+             if i.isnumeric() == True:
+                 element_counter+=1
+         if element_counter == len(list_cardno):
+             number_validation(list_cardno)
+             break
